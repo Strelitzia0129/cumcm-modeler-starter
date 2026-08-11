@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this project in teaching, training, or research, please cite it."
+title: "CUMCM Modeler Starter"
+type: software
+version: 0.1.0
+date-released: 2026-08-11
+authors:
+  - name: "CUMCM Modeler Starter Contributors"
+license: MIT
+abstract: >-
+  An open-source algorithm navigation, validation checklist, learning roadmap,
+  and Python baseline toolkit for CUMCM mathematical modeling contestants.
+keywords:
+  - CUMCM
+  - mathematical modeling
+  - optimization
+  - forecasting
+  - model validation
+

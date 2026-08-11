@@ -1,0 +1,16 @@
+# 建议 Python 3.11/3.12。先安装 core；比赛前不要临时升级主版本。
+numpy>=2.0
+pandas>=2.2
+scipy>=1.13
+scikit-learn>=1.5
+statsmodels>=0.14
+matplotlib>=3.9
+networkx>=3.3
+openpyxl>=3.1
+
+# 进阶题型按需安装：
+# cvxpy>=1.6       # 凸优化
+# ortools>=9.11    # 整数规划、调度、路径
+# pymoo>=0.6       # 多目标优化/NSGA-II
+# SALib>=1.5       # Sobol/Morris 敏感性分析
+# geopandas>=1.0   # 空间数据

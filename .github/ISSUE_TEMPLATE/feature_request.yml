@@ -1,0 +1,38 @@
+name: Feature request
+description: 建议新功能、算法卡或训练工具
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 要解决的建模问题
+      description: 从题目识别、学习、代码或验证角度说明真实需求。
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 建议方案
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: 适用边界与验证方式
+      description: 新算法应说明何时不用、最低基线和验证方法。
+  - type: textarea
+    id: sources
+    attributes:
+      label: 权威来源
+      description: 请提供官方文档、原始论文或开放教材链接。
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 提交前确认
+      options:
+        - label: 该建议不包含受限或未经许可复制的材料。
+          required: true
+        - label: 该建议不作保奖或万能算法承诺。
+          required: true
+

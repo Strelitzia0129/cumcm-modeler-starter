@@ -1,0 +1,32 @@
+name: Source update
+description: 报告规则、链接、许可或资料元数据变化
+title: "[Source]: "
+labels: [documentation, sources]
+body:
+  - type: input
+    id: current_url
+    attributes:
+      label: 当前条目或链接
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: 发现的变化
+      description: 说明失效、重定向、版本更新、许可变化或内容不准确之处。
+    validations:
+      required: true
+  - type: input
+    id: authoritative_url
+    attributes:
+      label: 建议的权威链接
+    validations:
+      required: true
+  - type: input
+    id: accessed_at
+    attributes:
+      label: 核验日期
+      placeholder: YYYY-MM-DD
+    validations:
+      required: true
+

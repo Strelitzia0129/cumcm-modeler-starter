@@ -1,0 +1,11 @@
+changelog:
+  categories:
+    - title: Algorithm and modeling improvements
+      labels: [algorithm, modeling]
+    - title: Documentation and sources
+      labels: [documentation, sources]
+    - title: Code and tooling
+      labels: [enhancement, bug]
+    - title: Other changes
+      labels: ["*"]
+

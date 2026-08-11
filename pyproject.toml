@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cumcm-modeler-starter"
+version = "0.1.0"
+description = "Algorithm navigation, validation checklists, and reproducible baselines for CUMCM modelers."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "CUMCM Modeler Starter Contributors" }]
+keywords = [
+  "CUMCM",
+  "mathematical-modeling",
+  "optimization",
+  "forecasting",
+  "model-validation",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Education",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Education",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+  "numpy>=2.0",
+  "pandas>=2.2",
+]
+
+[project.optional-dependencies]
+modeling = [
+  "matplotlib>=3.9",
+  "networkx>=3.3",
+  "openpyxl>=3.1",
+  "scikit-learn>=1.5",
+  "scipy>=1.13",
+  "statsmodels>=0.14",
+]
+dev = [
+  "matplotlib>=3.9",
+  "networkx>=3.3",
+  "openpyxl>=3.1",
+  "scikit-learn>=1.5",
+  "scipy>=1.13",
+  "statsmodels>=0.14",
+  "ruff>=0.9",
+]
+
+[project.scripts]
+cumcm-starter = "cumcm_starter.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+extend-exclude = ["docs"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

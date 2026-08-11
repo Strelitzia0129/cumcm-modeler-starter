@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CUMCM 算法导航｜零基础建模手 2026</title>
+  <style>
+    :root {
+      --ink:#17233c; --muted:#61708b; --paper:#f4f6fb; --card:#fff;
+      --line:#dce2ee; --navy:#10213f; --blue:#2c68d4; --cyan:#36b6c7;
+      --orange:#f28c48; --red:#c94152; --green:#21876f; --soft:#eaf0fb;
+      --shadow:0 14px 38px rgba(24,42,78,.09); --radius:20px;
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0; color:var(--ink); background:
+      radial-gradient(circle at 8% 4%, rgba(54,182,199,.12), transparent 25rem),
+      radial-gradient(circle at 95% 14%, rgba(242,140,72,.10), transparent 23rem),
+      var(--paper); font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+      line-height:1.65;
+    }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    .wrap { width:min(1180px, calc(100% - 32px)); margin:auto; }
+    .hero { background:linear-gradient(128deg,#0d1a32 0%,#173763 60%,#1a6476 100%); color:#fff; padding:56px 0 48px; overflow:hidden; position:relative; }
+    .hero::after { content:""; position:absolute; width:430px; height:430px; border:1px solid rgba(255,255,255,.13); border-radius:50%; right:-120px; top:-210px; box-shadow:0 0 0 55px rgba(255,255,255,.035),0 0 0 110px rgba(255,255,255,.025); }
+    .eyebrow { display:flex; gap:9px; flex-wrap:wrap; margin-bottom:18px; }
+    .badge { border:1px solid rgba(255,255,255,.26); background:rgba(255,255,255,.08); border-radius:999px; padding:5px 11px; font-size:13px; }
+    h1 { margin:0; font-size:clamp(34px,6vw,66px); letter-spacing:-.04em; line-height:1.07; max-width:850px; }
+    .subtitle { color:#dbe9ff; font-size:18px; max-width:780px; margin:20px 0 28px; }
+    .hero-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; max-width:840px; }
+    .hero-stat { background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.12); border-radius:15px; padding:15px 16px; backdrop-filter:blur(6px); }
+    .hero-stat strong { display:block; font-size:22px; }
+    .hero-stat span { color:#cbd9ee; font-size:12px; }
+    main { padding:32px 0 70px; }
+    .notice { display:grid; grid-template-columns:auto 1fr; gap:15px; padding:19px 21px; border-radius:16px; background:#fff3f0; border:1px solid #f2cbc2; margin-bottom:24px; box-shadow:var(--shadow); }
+    .notice .icon { font-size:27px; }
+    .notice strong { color:#9d2d36; }
+    .notice p { margin:2px 0 0; color:#744a4e; }
+    .panel { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:25px; margin:20px 0; }
+    .panel h2 { margin:0 0 6px; font-size:25px; }
+    .panel .lead { margin:0 0 18px; color:var(--muted); }
+    .north-star { display:grid; grid-template-columns:repeat(4,1fr); gap:13px; }
+    .star { border:1px solid var(--line); border-radius:15px; padding:16px; background:linear-gradient(180deg,#fff,#fafbff); }
+    .star b { display:block; color:var(--blue); margin-bottom:5px; }
+    .star p { margin:0; color:var(--muted); font-size:14px; }
+    .route { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; counter-reset:route; }
+    .route div { position:relative; border-radius:14px; padding:46px 14px 14px; background:#eef3fb; min-height:145px; }
+    .route div::before { counter-increment:route; content:counter(route); position:absolute; top:13px; left:14px; width:25px; height:25px; display:grid; place-items:center; border-radius:50%; background:var(--navy); color:#fff; font-weight:800; }
+    .route b { display:block; margin-bottom:5px; }
+    .route small { color:var(--muted); }
+    .toolbar { position:sticky; top:0; z-index:10; background:rgba(244,246,251,.92); backdrop-filter:blur(12px); padding:14px 0 8px; }
+    .searchbox { display:flex; gap:10px; }
+    .searchbox input { width:100%; border:1px solid #cbd5e5; border-radius:14px; padding:14px 17px; font-size:16px; outline:none; box-shadow:0 7px 20px rgba(24,42,78,.06); }
+    .searchbox input:focus { border-color:var(--blue); box-shadow:0 0 0 4px rgba(44,104,212,.11); }
+    .filters { display:flex; gap:7px; flex-wrap:wrap; margin:11px 0 3px; }
+    button.chip { border:1px solid #cfd8e8; background:#fff; color:#40506b; border-radius:999px; padding:7px 12px; cursor:pointer; }
+    button.chip.active { background:var(--navy); border-color:var(--navy); color:#fff; }
+    .result-count { color:var(--muted); font-size:13px; margin-top:7px; }
+    .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin:15px 0 28px; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:18px; padding:20px; box-shadow:0 8px 24px rgba(24,42,78,.055); transition:.18s ease; }
+    .card:hover { transform:translateY(-2px); box-shadow:0 13px 30px rgba(24,42,78,.10); }
+    .card-head { display:flex; justify-content:space-between; gap:14px; align-items:flex-start; }
+    .card h3 { margin:0; font-size:20px; line-height:1.35; }
+    .category { color:var(--blue); font-size:12px; margin-bottom:4px; font-weight:700; }
+    .priority { flex:none; border-radius:999px; font-size:12px; padding:4px 9px; font-weight:700; }
+    .priority.core { background:#e5f5ef; color:#167058; }
+    .priority.common { background:#fff0df; color:#9a5a16; }
+    .priority.advanced { background:#eeeafb; color:#6552a2; }
+    .one-line { color:#4d5c74; margin:11px 0 13px; }
+    .tag-row { display:flex; gap:6px; flex-wrap:wrap; }
+    .tag { background:#f0f3f9; color:#53627b; border-radius:7px; padding:3px 7px; font-size:12px; }
+    .facts { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin:15px 0 12px; }
+    .fact { padding:10px 11px; border-radius:10px; background:#f8f9fc; font-size:13px; }
+    .fact b { color:#283b5f; }
+    details { border-top:1px dashed #d8deea; padding-top:10px; }
+    summary { cursor:pointer; color:var(--blue); font-weight:700; font-size:14px; }
+    .detail-grid { display:grid; gap:8px; margin-top:10px; font-size:14px; }
+    .avoid { color:#a43845; }
+    .learn a { display:inline-block; margin:3px 9px 3px 0; }
+    table { border-collapse:collapse; width:100%; font-size:14px; }
+    th,td { padding:10px 11px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { color:#42506a; background:#f3f6fb; }
+    .table-wrap { overflow:auto; border:1px solid var(--line); border-radius:14px; }
+    .danger-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; }
+    .danger { background:#fff7f5; border-left:4px solid var(--red); border-radius:10px; padding:13px; font-size:14px; }
+    .sprint { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+    .week { border:1px solid var(--line); border-radius:14px; padding:15px; }
+    .week strong { color:var(--blue); display:block; }
+    .week span { color:var(--muted); font-size:13px; }
+    .download-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .download { display:block; border:1px solid var(--line); border-radius:13px; padding:14px; background:#f8faff; }
+    .download b { display:block; color:var(--ink); }
+    .download small { color:var(--muted); }
+    .empty { display:none; text-align:center; padding:35px; background:#fff; border-radius:15px; color:var(--muted); }
+    footer { color:#728098; text-align:center; padding:25px 0 5px; font-size:13px; }
+    @media (max-width:900px) {
+      .hero-grid,.north-star { grid-template-columns:repeat(2,1fr); }
+      .route { grid-template-columns:1fr 1fr; }
+      .cards { grid-template-columns:1fr; }
+      .danger-grid,.sprint { grid-template-columns:1fr 1fr; }
+      .download-grid { grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:560px) {
+      .hero { padding-top:38px; }
+      .hero-grid,.north-star,.route,.danger-grid,.sprint,.download-grid,.facts { grid-template-columns:1fr; }
+      .panel { padding:18px; }
+      .wrap { width:min(100% - 20px,1180px); }
+    }
+    @media print {
+      .toolbar,.filters,.searchbox { display:none; }
+      body { background:#fff; }
+      .hero { padding:25px 0; }
+      .panel,.card { break-inside:avoid; box-shadow:none; }
+      .cards { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="badge">2026 CUMCM</span><span class="badge">零基础建模手</span><span class="badge">离线可搜索</span><span class="badge">更新 2026-08-11</span></div>
+      <h1>先识别问题，<br>再选择算法。</h1>
+      <p class="subtitle">21 张比赛型算法卡：从题目关键词定位最低可用模型、升级路线、验证方法和权威教程。目标不是背算法，而是在压力下完成可信的建模闭环。</p>
+      <div class="hero-grid">
+        <div class="hero-stat"><strong>21</strong><span>题型算法卡</span></div>
+        <div class="hero-stat"><strong>34</strong><span>核验资料入口</span></div>
+        <div class="hero-stat"><strong id="daysLeft">30</strong><span>距 9/10 18:00</span></div>
+        <div class="hero-stat"><strong>6</strong><span>建议全真模拟</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="notice">
+      <div class="icon">⚠</div>
+      <div><strong>2026 AI 新规已发布</strong><p>允许使用 AI，但核心建模须由队员主导，采纳内容要人工审查核实，并按规则在论文和支撑材料中声明、留痕。新规自 2026-09-01 起试行；提交前以组委会官网最新文本为准。<a href="https://www.mcm.edu.cn/html_cn/node/fef94648f2836ab6cc81586f4c38512b.html" target="_blank" rel="noopener">查看官网</a></p></div>
+    </section>
+
+    <section class="panel">
+      <h2>国奖的北极星</h2>
+      <p class="lead">组委会章程明确强调四个维度。算法复杂度不在其中；复杂模型只有提升这些维度时才有价值。</p>
+      <div class="north-star">
+        <div class="star"><b>假设合理</b><p>假设要和数据、机理、尺度一致，并说明失效边界。</p></div>
+        <div class="star"><b>建模创造性</b><p>创新来自场景化变量、目标、约束与验证，不是换算法名。</p></div>
+        <div class="star"><b>结果正确</b><p>样本外、残差、约束、极端情形和复算构成证据链。</p></div>
+        <div class="star"><b>表达清晰</b><p>每问都形成“问题—模型—结果—验证—意义”的闭环。</p></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>10 分钟选型法</h2>
+      <p class="lead">赛题一到手，禁止先搜“高级算法”。按这五步走，20 分钟内应能确定第一版基线。</p>
+      <div class="route">
+        <div><b>先判是否需要建模</b><small>若只是题给公式代入、乘加或确定性核算，直接计算，不强行套模型。</small></div>
+        <div><b>写清输出</b><small>连续值、类别、排名、最优方案、轨迹/物理量，分别指向不同问题族。</small></div>
+        <div><b>看数据与约束</b><small>样本量、时间顺序、标签、非线性、整数变量、网络结构和不确定性。</small></div>
+        <div><b>先跑最低基线</b><small>可解释且能验证：线性回归、朴素预测、LP、简单 ODE、K-Means 等。</small></div>
+        <div><b>用失败证据升级</b><small>只有残差、约束、非线性或稳定性暴露问题时，才升级复杂模型。</small></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>输出 → 算法入口</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>题目要你输出</th><th>先归类为</th><th>第一基线</th><th>必须验证</th></tr></thead>
+          <tbody>
+            <tr><td>一个连续数值/未来数值</td><td>回归 / 时间序列</td><td>线性/岭回归；朴素法/ETS</td><td>样本外误差、残差、时间切分</td></tr>
+            <tr><td>类别或是否发生</td><td>分类</td><td>逻辑回归</td><td>分层交叉验证、F1、混淆矩阵</td></tr>
+            <tr><td>无标签的分组</td><td>聚类</td><td>K-Means + 层次聚类对照</td><td>轮廓系数、初始化/抽样稳定性</td></tr>
+            <tr><td>得分、排名、择优</td><td>综合评价</td><td>熵权-TOPSIS + 等权对照</td><td>正向化、权重扰动、排名稳定性</td></tr>
+            <tr><td>分配、排程、路径、最优方案</td><td>优化 / 图论</td><td>LP/MILP/最短路</td><td>约束残差、最优性界、基线对比</td></tr>
+            <tr><td>状态随时间/空间变化</td><td>机理 / ODE/PDE</td><td>守恒关系 + 简化 ODE</td><td>量纲、初边值、极端情况、参数敏感性</td></tr>
+            <tr><td>显著性、影响因素</td><td>统计推断 / 关联</td><td>检验 + 回归/相关</td><td>前提、效应量、混淆、因果边界</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="toolbar" id="algorithmSection">
+      <div class="searchbox"><input id="search" type="search" placeholder="搜索：预测、调度、排名、路径、ODE、敏感性、GIS……" aria-label="搜索算法"></div>
+      <div class="filters" id="filters"></div>
+      <div class="result-count" id="resultCount"></div>
+    </div>
+    <section class="cards" id="cards"></section>
+    <div class="empty" id="empty">没有匹配结果。试试“预测”“优化”“验证”或点击“全部”。</div>
+
+    <section class="panel">
+      <h2>这些用法会直接拉低论文可信度</h2>
+      <p class="lead">把下面九条贴在比赛桌上。</p>
+      <div class="danger-grid">
+        <div class="danger">小样本直接神经网络，既不稳定也难解释。</div>
+        <div class="danger">时间序列随机打乱训练/测试，产生未来信息泄漏。</div>
+        <div class="danger">小规模整数问题不求精确解，先上 GA/PSO。</div>
+        <div class="danger">AHP、熵权、TOPSIS 串联就称“组合创新”。</div>
+        <div class="danger">只报 R²/准确率，不给样本外误差和基线。</div>
+        <div class="danger">优化结果不检查约束违反量和现实可执行性。</div>
+        <div class="danger">插值用于数据区间外，并把它称为预测。</div>
+        <div class="danger">把相关性、Granger 先后关系直接写成因果。</div>
+        <div class="danger">AI 生成的公式、代码、数字未复算且未留痕。</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>剩余 30 天：只做这五段</h2>
+      <div class="sprint">
+        <div class="week"><strong>8/11–8/17</strong><b>数据闭环</b><span>Python、清洗、图表、回归、分类；4 小时小报告。</span></div>
+        <div class="week"><strong>8/18–8/24</strong><b>决策算法</b><span>LP/MILP、TOPSIS、图论、多目标；第一次真题。</span></div>
+        <div class="week"><strong>8/25–8/31</strong><b>时间与机理</b><span>时序、聚类、检验、ODE、蒙特卡洛、敏感性。</span></div>
+        <div class="week"><strong>9/1–9/7</strong><b>赛题化</b><span>至少四次计时模拟；完善写作、图表和 AI 留痕。</span></div>
+        <div class="week"><strong>9/8–9/10</strong><b>封板</b><span>环境、代码、文件树和规则核验；不再追新算法。</span></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>包内可直接使用</h2>
+      <p class="lead">导航页解决“选什么”，其余文件解决“怎么练、怎么跑、怎么留证”。</p>
+      <div class="download-grid">
+        <a class="download" href="30-day-sprint.md"><b>30 天冲刺计划</b><small>逐日主题、交付物和验收标准</small></a>
+        <a class="download" href="../examples/baseline_demos.py"><b>Python 最小模板</b><small>9 类可运行基线与落盘证据</small></a>
+        <a class="download" href="sources.csv"><b>34 条资料清单</b><small>官方/权威入口、用途和优先级</small></a>
+        <a class="download" href="ai-usage-log-template.md"><b>AI 使用记录</b><small>工具、环节、修改与核验留痕</small></a>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>第一优先资料</h2>
+      <p class="lead">零基础时间有限，先读这些，其他 20+ 条见 CSV。</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>用途</th><th>资料</th><th>怎么用</th></tr></thead>
+        <tbody>
+          <tr><td>规则</td><td><a href="https://www.mcm.edu.cn/html_cn/block/44e92058f537729c6b6a62a3662ee417.html" target="_blank" rel="noopener">组委会章程及规则</a></td><td>比赛前再次下载当届版本。</td></tr>
+          <tr><td>真题</td><td><a href="https://www.mcm.edu.cn/html_cn/block/8579f5fce999cdc896f78bca5d4f8237.html" target="_blank" rel="noopener">CUMCM 历年赛题</a></td><td>训练主线；每周至少一套计时。</td></tr>
+          <tr><td>系统入门</td><td><a href="https://higher.smartedu.cn/course/68bb514c9d83483b432dcc61" target="_blank" rel="noopener">厦门大学数学建模课程</a></td><td>按需看章节，不要从头被动刷完。</td></tr>
+          <tr><td>数据与 ML</td><td><a href="https://scikit-learn.org/stable/user_guide" target="_blank" rel="noopener">scikit-learn 用户指南</a></td><td>重点读模型选择、交叉验证和指标。</td></tr>
+          <tr><td>优化</td><td><a href="https://developers.google.com/optimization" target="_blank" rel="noopener">Google OR-Tools</a> / <a href="https://docs.scipy.org/doc/scipy/tutorial/optimize.html" target="_blank" rel="noopener">SciPy optimize</a></td><td>先精确求解，再考虑启发式。</td></tr>
+          <tr><td>时间序列</td><td><a href="https://otexts.com/fpp3/" target="_blank" rel="noopener">Forecasting: Principles and Practice</a></td><td>重点读探索、基线、准确性和残差。</td></tr>
+          <tr><td>统计</td><td><a href="https://itl.nist.gov/div898/handbook/index2.htm" target="_blank" rel="noopener">NIST 统计方法手册</a></td><td>查检验前提、DOE 和诊断。</td></tr>
+          <tr><td>稳健性</td><td><a href="https://salib.readthedocs.io/en/latest/user_guide/basics.html" target="_blank" rel="noopener">SALib</a></td><td>先 OAT，强交互再 Morris/Sobol。</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <footer>本页只提供学习导航与模型选择起点。任何算法都必须根据具体题面、数据、约束和验证结果改造。</footer>
+  </main>
+
+  <script>
+  const categoryNames = {
+    all:"全部", foundation:"数据基础", prediction:"预测", classification:"分类", clustering:"聚类/降维",
+    evaluation:"评价", optimization:"优化", network:"图论", mechanism:"机理/几何", statistics:"统计/关联",
+    uncertainty:"不确定性", spatial:"空间"
+  };
+
+  const algorithms = [
+    {cat:"foundation",name:"数据审计与 EDA",priority:"core",level:"必修",one:"任何赛题的第一个算法不是模型，而是确认数据能不能被相信。",signals:["Excel/CSV","缺失","异常","单位","附件"],baseline:"类型、缺失、重复、范围、单位、时间粒度、ID 唯一性检查",upgrade:"分组一致性、异常机制、缺失机制、数据字典与可复现清洗流水线",validate:"原始行数对账；随机抽样回查；处理前后分布对比",avoid:"把 0 当缺失；把缺失填 0；改了单位却未记录；只画相关热图。",tools:"pandas · NumPy · Matplotlib",learn:[["pandas 入门","https://pandas.pydata.org/docs/getting_started/intro_tutorials/"],["NumPy 初学者","https://numpy.org/doc/stable/user/absolute_beginners.html"]]},
+    {cat:"foundation",name:"插值、拟合与数值近似",priority:"core",level:"必修",one:"补齐区间内缺点或寻找函数关系；插值不等于预测。",signals:["缺测点","曲线","标定","拟合公式","平滑"],baseline:"线性插值 / 最小二乘直线",upgrade:"三次样条、鲁棒回归、非线性最小二乘",validate:"留出观测点；残差图；端点与单调性；量纲",avoid:"用高阶多项式追噪声；区间外强行外推；只报 R²。",tools:"scipy.interpolate · scipy.optimize.curve_fit",learn:[["SciPy 插值","https://docs.scipy.org/doc/scipy/tutorial/interpolate.html"],["NIST 回归","https://itl.nist.gov/div898/handbook/"]]},
+    {cat:"prediction",name:"横截面回归",priority:"core",level:"必修",one:"有特征 X，要估计连续目标 y；先线性可解释，再处理非线性。",signals:["预测产量","估计数值","影响因素","拟合","连续目标"],baseline:"线性回归 + Ridge/Lasso",upgrade:"随机森林、梯度提升、GAM；仅在基线暴露非线性时升级",validate:"K 折交叉验证；RMSE/MAE；残差；VIF；外推边界",avoid:"训练集评估；树模型外推趋势；用相关性代替因果。",tools:"scikit-learn · statsmodels",learn:[["scikit-learn","https://scikit-learn.org/stable/user_guide"],["ISL with Python","https://www.statlearning.com/"]]},
+    {cat:"prediction",name:"时间序列预测",priority:"core",level:"必修",one:"数据按时间连续观测，未来与历史的趋势、季节和自相关有关。",signals:["未来","月度/日度","趋势","季节性","销量"],baseline:"季节朴素法 + ETS/Holt-Winters",upgrade:"ARIMA/SARIMA、含外生变量的 SARIMAX、状态空间",validate:"滚动/扩展窗口；与朴素法对比；残差白噪声；预测区间",avoid:"随机切分；用全序列标准化；序列很短却拟合大量参数。",tools:"statsmodels.tsa",learn:[["FPP3 教材","https://otexts.com/fpp3/"],["statsmodels TSA","https://www.statsmodels.org/stable/tsa.html"]]},
+    {cat:"classification",name:"分类与判别",priority:"core",level:"必修",one:"输入有标签，输出是类别、风险等级或是否发生。",signals:["识别","判断是否","类别","风险等级","阳性/阴性"],baseline:"逻辑回归 / LDA",upgrade:"随机森林、SVM、梯度提升；小样本高维优先 SVM",validate:"分层交叉验证；宏 F1；混淆矩阵；ROC-AUC；类别不平衡",avoid:"只报准确率；先全数据做特征选择；SMOTE 后再切分。",tools:"scikit-learn",learn:[["监督学习","https://scikit-learn.org/stable/supervised_learning.html"],["交叉验证","https://scikit-learn.org/stable/modules/cross_validation.html"]]},
+    {cat:"clustering",name:"聚类与无标签分组",priority:"common",level:"高频",one:"没有已知标签，需要发现自然分组或建立分级。",signals:["聚类","分群","亚类","类别未知","客户分层"],baseline:"标准化 + K-Means，并与层次聚类对照",upgrade:"DBSCAN（任意形状）、GMM（软分类）、BIRCH（大样本）",validate:"轮廓系数；多随机种子；抽样稳定性；领域可解释性",avoid:"不标准化；凭肘部图强定 k；把聚类标签当真值。",tools:"sklearn.cluster",learn:[["聚类指南","https://scikit-learn.org/stable/modules/clustering.html"]]},
+    {cat:"clustering",name:"PCA 与降维",priority:"common",level:"高频",one:"高维相关指标压缩为少数综合成分，兼顾可视化与去共线。",signals:["指标多","相关性强","降维","主成分","多重共线"],baseline:"标准化 + PCA + 方差贡献率",upgrade:"因子分析、PLS、核 PCA；非线性结构再考虑流形方法",validate:"累计贡献率；载荷解释；重构误差；下游任务表现",avoid:"不标准化；只凭贡献率命名主成分；把 PCA 当因果。",tools:"sklearn.decomposition",learn:[["分解与PCA","https://scikit-learn.org/stable/modules/decomposition.html"]]},
+    {cat:"evaluation",name:"熵权–TOPSIS 综合评价",priority:"core",level:"必修",one:"多指标、无明确标签，要形成可复算的得分与排名。",signals:["综合评价","排名","择优","多指标","得分"],baseline:"等权 TOPSIS + 熵权 TOPSIS 对照",upgrade:"CRITIC（指标冲突）、VIKOR（妥协排序）、动态 TOPSIS",validate:"指标正向化；量纲；权重 ±10%/±20%；排名稳定性",avoid:"机械串联多种赋权；熵权被极端值支配；不给原始指标解释。",tools:"NumPy · pandas",learn:[["NIST 多变量概览","https://itl.nist.gov/div898/handbook/eda/section1/eda17.htm"]]},
+    {cat:"evaluation",name:"AHP、BWM 与模糊评价",priority:"advanced",level:"进阶",one:"确有专家判断、指标层级或定性语义时才使用主观评价。",signals:["专家打分","层级指标","模糊等级","满意度","定性指标"],baseline:"AHP + 一致性检验",upgrade:"BWM 降低比较次数；模糊综合评价处理隶属度",validate:"一致性；专家间一致度；权重扰动；与客观权重对照",avoid:"自己拍脑袋造判断矩阵；指标太多；把主观权重包装成客观。",tools:"NumPy · 问卷/专家记录",learn:[["厦大数学建模课","https://higher.smartedu.cn/course/68bb514c9d83483b432dcc61"]]},
+    {cat:"optimization",name:"线性规划 LP",priority:"core",level:"必修",one:"目标和约束都能写成线性式，决策变量连续。",signals:["资源分配","成本最小","收益最大","配比","产量"],baseline:"SciPy linprog / CVXPY",upgrade:"大规模稀疏模型、对偶分析、参数化敏感性",validate:"求解状态；约束松弛；对偶价格；参数扰动；人工小例复算",avoid:"最大化忘记转符号；单位不一致；只给最优值不解释决策变量。",tools:"scipy.optimize · CVXPY",learn:[["SciPy optimize","https://docs.scipy.org/doc/scipy/tutorial/optimize.html"],["CVXPY","https://www.cvxpy.org/tutorial/index.html"]]},
+    {cat:"optimization",name:"整数规划、排程与指派",priority:"core",level:"必修",one:"决策必须为整数/0-1，或涉及排班、选择、指派和逻辑约束。",signals:["是否选择","排班","指派","调度","0-1"],baseline:"MILP / CP-SAT 精确求解",upgrade:"分解、滚动优化、启发式热启动；规模过大再用元启发式",validate:"可行性；最优性界/gap；时间限制；小规模枚举对照",avoid:"把连续解四舍五入；小规模直接 GA；漏写互斥/前后序约束。",tools:"OR-Tools · scipy.milp · CVXPY",learn:[["OR-Tools","https://developers.google.com/optimization"],["SciPy MILP","https://docs.scipy.org/doc/scipy/tutorial/optimize.html"]]},
+    {cat:"optimization",name:"非线性与全局优化",priority:"common",level:"高频",one:"目标或约束非线性；先判断凸性，再决定局部或全局方法。",signals:["非线性","连续参数","复杂约束","局部最优","曲面"],baseline:"多初值 SLSQP / trust-constr",upgrade:"差分进化、PSO、GA、模拟退火；需给收敛与重复运行证据",validate:"多初值；梯度/有限差分；约束违反；已知下界；重复种子",avoid:"声称找到全局最优却无证据；罚函数尺度失衡；只跑一个随机种子。",tools:"scipy.optimize · pymoo",learn:[["SciPy optimize","https://docs.scipy.org/doc/scipy/tutorial/optimize.html"],["凸优化教材","https://web.stanford.edu/~boyd/cvxbook/"]]},
+    {cat:"optimization",name:"多目标与 Pareto 决策",priority:"common",level:"高频",one:"多个目标真实冲突，不能只给一个武断权重下的解。",signals:["兼顾","尽可能","成本与效益","多目标","权衡"],baseline:"加权和/ε-约束法画出权衡",upgrade:"NSGA-II/III、MOEA/D；最后再做折中解选择",validate:"目标归一化；Pareto 支配；超体积/收敛；权重或偏好敏感性",avoid:"直接把不同量纲相加；只展示一组权重；把所有目标都写成最大。",tools:"pymoo · CVXPY",learn:[["pymoo NSGA-II","https://pymoo.org/algorithms/moo/nsga2.html"]]},
+    {cat:"network",name:"最短路、流、匹配与网络结构",priority:"core",level:"必修",one:"对象天然是节点和边，问题关注路径、容量、连通或配对。",signals:["路径","网络","节点/边","流量","匹配"],baseline:"Dijkstra / 最大流 / 匈牙利算法 / 最小生成树",upgrade:"时空展开网络、最小费用流、A*、鲁棒网络设计",validate:"边权单位；负权检查；流守恒；断边/删点鲁棒性；人工小图",avoid:"负权仍用 Dijkstra；把欧氏距离当真实路网距离；忽略方向。",tools:"NetworkX · OR-Tools",learn:[["NetworkX 算法","https://networkx.org/documentation/stable/reference/algorithms/index.html"],["OR-Tools 路径","https://developers.google.com/optimization/routing/vrp"]]},
+    {cat:"mechanism",name:"常微分方程 ODE 与动力系统",priority:"core",level:"必修",one:"状态随时间演化，变化率由守恒、流入流出或相互作用决定。",signals:["增长","传热","反应","种群","动态变化"],baseline:"状态变量 + 守恒关系 + solve_ivp",upgrade:"参数反演、刚性求解、耦合系统、事件检测、状态空间",validate:"量纲；初值；边界/极限；数值容差；参数置信区间与敏感性",avoid:"先写现成方程再找解释；参数无来源；忽略刚性和物理边界。",tools:"scipy.integrate.solve_ivp",learn:[["solve_ivp 官方文档","https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html"]]},
+    {cat:"mechanism",name:"几何、运动学与坐标变换",priority:"common",level:"高频",one:"求轨迹、位置、角度、覆盖、碰撞或反射，先建立统一坐标系。",signals:["轨迹","角度","覆盖率","碰撞","反射/投影"],baseline:"参数曲线 + 坐标变换 + 几何约束",upgrade:"扫描线、GJK/分离轴、光线追迹、刚体齐次变换",validate:"极端位置；边界相切；单位/角度制；数值几何容差；动画抽查",avoid:"度和弧度混用；坐标系未声明；只画图不做误差/碰撞判定。",tools:"NumPy · SciPy spatial · SymPy",learn:[["SciPy 空间算法","https://docs.scipy.org/doc/scipy/reference/spatial.html"]]},
+    {cat:"statistics",name:"假设检验、ANOVA 与实验设计",priority:"core",level:"必修",one:"判断差异是否显著、因素是否有效，或规划更省样本的试验。",signals:["显著","检验","催化剂","因素","抽样/质检"],baseline:"t/U 检验；ANOVA/Kruskal-Wallis；效应量",upgrade:"多因素交互、混合模型、响应曲面、序贯抽样",validate:"独立性/正态/方差齐性；多重比较；效应量；功效",avoid:"只看 p<0.05；多次检验不校正；显著但效应极小。",tools:"scipy.stats · statsmodels",learn:[["NIST 手册","https://itl.nist.gov/div898/handbook/index2.htm"]]},
+    {cat:"statistics",name:"关联、影响因素与因果边界",priority:"common",level:"高频",one:"描述变量关系与控制混淆；除非有识别设计，不轻易声称因果。",signals:["关系","影响因素","相关","作用","驱动"],baseline:"散点 + Pearson/Spearman + 多元回归",upgrade:"偏相关、GAM、DID/工具变量、Granger（仅时序预测先后）",validate:"异常值；非线性；共线性；稳健标准误；替代规格",avoid:"相关即因果；把 Granger 叫真实因果；忽略共同趋势。",tools:"scipy.stats · statsmodels",learn:[["NIST 多变量","https://itl.nist.gov/div898/handbook/eda/section1/eda17.htm"],["statsmodels","https://www.statsmodels.org/stable/api.html"]]},
+    {cat:"uncertainty",name:"蒙特卡洛、随机模拟与排队",priority:"common",level:"高频",one:"输入或过程有随机性，要估计分布、风险、等待和置信区间。",signals:["概率","风险","随机","等待时间","服务台"],baseline:"明确分布 + 固定随机种子 + Monte Carlo",upgrade:"离散事件仿真、重要抽样、Bootstrap、随机规划",validate:"收敛图；置信区间；分布拟合；多种假设；独立重复",avoid:"分布凭空设定；样本次数无收敛证据；只报均值不报尾部风险。",tools:"NumPy random · SciPy stats",learn:[["NumPy 随机","https://numpy.org/doc/stable/reference/random/index.html"],["NIST 分布与统计","https://itl.nist.gov/div898/handbook/"]]},
+    {cat:"uncertainty",name:"敏感性、稳健性与误差传播",priority:"core",level:"必修",one:"模型完成后的必做层：结论是否依赖某个脆弱参数或偶然样本？",signals:["稳健性","敏感性","误差","参数变化","可靠性"],baseline:"关键参数 ±10%/±20% + Bootstrap/留一法",upgrade:"Morris 筛选；Sobol 全局敏感性；场景分析；鲁棒优化",validate:"样本收敛；交互效应；结论/排名翻转点；不确定区间",avoid:"只改变一个无关参数；只画图不解释；把局部敏感性当全局结论。",tools:"SALib · NumPy",learn:[["SALib 基础","https://salib.readthedocs.io/en/latest/user_guide/basics.html"]]},
+    {cat:"spatial",name:"地理空间、选址与覆盖",priority:"advanced",level:"进阶",one:"位置带经纬度、行政区、路网或栅格时，要显式处理投影和空间关系。",signals:["经纬度","地图","选址","覆盖","空间邻接"],baseline:"正确 CRS + 距离/缓冲区 + 空间连接",upgrade:"设施选址 MILP、路网距离、空间回归、栅格分析",validate:"投影/距离单位；边界效应；路网与直线距离对照；空间自相关",avoid:"直接用经纬度算米；地图好看但无分析；忽略空间泄漏。",tools:"GeoPandas · Shapely · NetworkX",learn:[["GeoPandas 入门","https://geopandas.org/en/stable/getting_started.html"]]}
+  ];
+
+  let activeCategory = "all";
+  const cards = document.getElementById("cards");
+  const search = document.getElementById("search");
+  const filters = document.getElementById("filters");
+  const resultCount = document.getElementById("resultCount");
+  const empty = document.getElementById("empty");
+
+  Object.entries(categoryNames).forEach(([key,label]) => {
+    const button = document.createElement("button");
+    button.className = "chip" + (key === "all" ? " active" : "");
+    button.textContent = label;
+    button.dataset.category = key;
+    button.addEventListener("click", () => {
+      activeCategory = key;
+      document.querySelectorAll(".chip").forEach(x => x.classList.toggle("active", x.dataset.category === key));
+      render();
+    });
+    filters.appendChild(button);
+  });
+
+  function cardHTML(item) {
+    const sourceLinks = item.learn.map(([label,url]) => `<a href="${url}" target="_blank" rel="noopener">${label} ↗</a>`).join("");
+    return `<article class="card">
+      <div class="card-head"><div><div class="category">${categoryNames[item.cat]}</div><h3>${item.name}</h3></div><span class="priority ${item.priority}">${item.level}</span></div>
+      <p class="one-line">${item.one}</p>
+      <div class="tag-row">${item.signals.map(x => `<span class="tag">${x}</span>`).join("")}</div>
+      <div class="facts"><div class="fact"><b>先用：</b>${item.baseline}</div><div class="fact"><b>验证：</b>${item.validate}</div></div>
+      <details><summary>展开升级路线、避坑与资料</summary><div class="detail-grid">
+        <div><b>何时升级：</b>${item.upgrade}</div><div class="avoid"><b>别这样做：</b>${item.avoid}</div>
+        <div><b>工具：</b>${item.tools}</div><div class="learn"><b>官方/权威入口：</b> ${sourceLinks}</div>
+      </div></details>
+    </article>`;
+  }
+
+  function render() {
+    const query = search.value.trim().toLowerCase();
+    const shown = algorithms.filter(item => {
+      const categoryMatch = activeCategory === "all" || item.cat === activeCategory;
+      const haystack = [item.name,item.one,item.baseline,item.upgrade,item.validate,item.avoid,item.tools,...item.signals].join(" ").toLowerCase();
+      return categoryMatch && (!query || haystack.includes(query));
+    });
+    cards.innerHTML = shown.map(cardHTML).join("");
+    resultCount.textContent = `显示 ${shown.length} / ${algorithms.length} 张算法卡`;
+    empty.style.display = shown.length ? "none" : "block";
+  }
+  search.addEventListener("input", render);
+  render();
+
+  const target = new Date("2026-09-10T18:00:00+08:00");
+  const now = new Date();
+  const days = Math.max(0, Math.ceil((target - now) / 86400000));
+  document.getElementById("daysLeft").textContent = target > now ? days : "已开赛";
+  </script>
+</body>
+</html>
